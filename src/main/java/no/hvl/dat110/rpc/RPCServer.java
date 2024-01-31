@@ -49,10 +49,17 @@ public class RPCServer {
 		   // - invoke the method and pass the param
 		   // - encapsulate return value 
 		   // - send back the message containing the RPC reply
-			
-		   if (true)
-				throw new UnsupportedOperationException(TODO.method());
-		   
+
+			requestmsg = connection.receive();
+			System.out.println(requestmsg);
+/*
+
+			rpcid = requestmsg.getData()[0];
+			byte[] payload = RPCUtils.decapsulate(requestmsg.getData());
+			byte[] idk = services.get(rpcid).invoke(payload);
+
+*/
+
 		   // TODO - END
 
 			// stop the server if it was stop methods that was called
