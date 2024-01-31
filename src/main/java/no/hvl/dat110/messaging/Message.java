@@ -9,13 +9,13 @@ public class Message {
 
 	// construction a Message with the data provided
 	public Message(byte[] data) {
+
+		if(data == null || data.length > 128){
+			throw new UnsupportedOperationException("invalid input");
+		}
+
+		this.data = data;
 		
-		// TODO - START
-		
-		if (true)
-			throw new UnsupportedOperationException(TODO.constructor("Message"));
-			
-		// TODO - END
 	}
 
 	public byte[] getData() {

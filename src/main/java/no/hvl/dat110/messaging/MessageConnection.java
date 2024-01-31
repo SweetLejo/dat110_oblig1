@@ -5,78 +5,59 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.Arrays;
 
 import no.hvl.dat110.TODO;
 
-
 public class MessageConnection {
 
-	private DataOutputStream outStream; // for writing bytes to the underlying TCP connection
-	private DataInputStream inStream; // for reading bytes from the underlying TCP connection
-	private Socket socket; // socket for the underlying TCP connection
-	
+	private DataOutputStream outStream;
+	private DataInputStream inStream;
+	private Socket socket;
+
 	public MessageConnection(Socket socket) {
-
 		try {
-
 			this.socket = socket;
-
 			outStream = new DataOutputStream(socket.getOutputStream());
-
-			inStream = new DataInputStream (socket.getInputStream());
-
+			inStream = new DataInputStream(socket.getInputStream());
 		} catch (IOException ex) {
-
-			System.out.println("Connection: " + ex.getMessage());
-			ex.printStackTrace();
+			handleException("Error in constructor", ex);
 		}
 	}
 
 	public void send(Message message) {
-
-		byte[] data;
-		
-		// TODO - START
-		// encapsulate the data contained in the Message and write to the output stream
-		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
-			
-		// TODO - END
-
+		try {
+			outStream.write(MessageUtils.encapsulate(message));
+		} catch (IOException e) {
+			handleException("Error in send method", e);
+		}
 	}
 
 	public Message receive() {
-
 		Message message = null;
-		byte[] data;
-		
-		// TODO - START
-		// read a segment from the input stream and decapsulate data into a Message
-		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
-		
-		// TODO - END
-		
+		byte[] data = new byte[128];
+		try {
+			inStream.read(data);
+			message = MessageUtils.decapsulate(data);
+		} catch (IOException e) {
+			handleException("Error in receive method", e);
+		}
 		return message;
-		
 	}
 
-	// close the connection by closing streams and the underlying socket	
 	public void close() {
-
 		try {
-			
 			outStream.close();
 			inStream.close();
-
 			socket.close();
-			
 		} catch (IOException ex) {
-
-			System.out.println("Connection: " + ex.getMessage());
-			ex.printStackTrace();
+			handleException("Error in close method", ex);
 		}
+	}
+
+	private void handleException(String message, IOException ex) {
+		System.out.println("Connection: " + message);
+		ex.printStackTrace();
+		// Handle the exception appropriately, e.g., log it using a logging framework
 	}
 }

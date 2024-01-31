@@ -1,6 +1,7 @@
 package no.hvl.dat110.messaging;
 
 
+import java.io.IOException;
 import java.net.Socket;
 
 import no.hvl.dat110.TODO;
@@ -12,12 +13,12 @@ public class MessagingClient {
 
 	// server port on which the messaging server is listening
 	private int port;
-	
+
 	public MessagingClient(String server, int port) {
 		this.server = server;
 		this.port = port;
 	}
-	
+
 	// setup of a messaging connection to a messaging server
 	public MessageConnection connect () {
 
@@ -25,15 +26,22 @@ public class MessagingClient {
 		Socket clientSocket;
 
 		MessageConnection connection = null;
-		
+
 		// TODO - START
 		// connect to messaging server using a TCP socket
 		// create and return a corresponding messaging connection
-		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
-		
+		try {
+            System.out.println("Attempting to connect to the server at " + server + ":" + port);
+            clientSocket = new Socket(server, port);
+            System.out.println("Connection established successfully");
+			connection = new MessageConnection(clientSocket);
+			return connection;
+		}catch (IOException e){
+			e.printStackTrace();
+			System.err.println("failed to connect");
+			return null;
+		}
 		// TODO - END
-		return connection;
+
 	}
 }

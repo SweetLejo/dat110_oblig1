@@ -9,38 +9,30 @@ public class MessageUtils {
 	public static final int SEGMENTSIZE = 128;
 
 	public static int MESSAGINGPORT = 8080;
-	public static String MESSAGINGHOST = "localhost";
+	public static String MESSAGINGHOST = "127.0.0.1";
 
 	public static byte[] encapsulate(Message message) {
-		
-		byte[] segment = null;
-		byte[] data;
-		
-		// TODO - START
-		
+
+		byte[] data = message.getData();
+		byte[] segment = new byte[SEGMENTSIZE];
+
+		segment[0] = (byte) data.length;
+        System.arraycopy(data, 0, segment, 1, data.length);
+
 		// encapulate/encode the payload data of the message and form a segment
 		// according to the segment format for the messaging layer
-		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
-			
-		// TODO - END
 		return segment;
 		
 	}
 
 	public static Message decapsulate(byte[] segment) {
 
-		Message message = null;
-		
-		// TODO - START
-		// decapsulate segment and put received payload data into a message
-		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
-		
-		// TODO - END
-		
+
+		byte[] data = new byte[segment[0]];
+		System.arraycopy(segment, 1, data, 0, segment[0]);
+
+		Message message = new Message(data);
+
 		return message;
 		
 	}
