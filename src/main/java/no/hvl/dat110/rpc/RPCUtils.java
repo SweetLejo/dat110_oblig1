@@ -11,7 +11,11 @@ import no.hvl.dat110.TODO;
 public class RPCUtils {
 	
 	public static byte[] encapsulate(byte rpcid, byte[] payload) {
-		
+
+		if(payload == null){
+			return new byte[]{rpcid};
+		}
+
 		byte[] rpcmsg = new byte[payload.length + 1];
 		
 		// TODO - START
@@ -27,7 +31,9 @@ public class RPCUtils {
 	}
 	
 	public static byte[] decapsulate(byte[] rpcmsg) {
-		
+		if(rpcmsg.length <= 1){
+			return new byte[0];
+		}
 		byte[] payload = new byte[rpcmsg.length - 1];
 		
 		// TODO - START

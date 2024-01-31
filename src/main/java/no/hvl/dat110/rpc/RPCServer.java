@@ -51,7 +51,12 @@ public class RPCServer {
 		   // - send back the message containing the RPC reply
 
 			requestmsg = connection.receive();
-			System.out.println(requestmsg);
+			byte[] decapsulated = RPCUtils.decapsulate(requestmsg.getData());
+			rpcid = requestmsg.getData()[0];
+			byte[] answer = services.get(rpcid).invoke(decapsulated);
+			byte[] idk = RPCUtils.encapsulate(rpcid, answer);
+			replymsg = new Message(idk);
+			connection.send(replymsg);
 /*
 
 			rpcid = requestmsg.getData()[0];
