@@ -31,9 +31,9 @@ public class MessagingClient {
 		// connect to messaging server using a TCP socket
 		// create and return a corresponding messaging connection
 		try {
-            System.out.println("Attempting to connect to the server at " + server + ":" + port);
+			//System.out.println("Attempting to connect to the server at " + server + ":" + port);
             clientSocket = new Socket(server, port);
-            System.out.println("Connection established successfully");
+            //System.out.println("Connection established successfully");
 			connection = new MessageConnection(clientSocket);
 			return connection;
 		}catch (IOException e){
