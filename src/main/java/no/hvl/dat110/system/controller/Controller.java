@@ -32,14 +32,22 @@ public class Controller  {
 		// read value from sensor using RPC and write to display using RPC
 
 
+		DisplayStub displayStub = new DisplayStub(displayclient);
+		SensorStub sensorStub = new SensorStub(sensorclient);
+
 		sensorclient.connect();
 		displayclient.connect();
 
-		DisplayStub displayStub = new DisplayStub(displayclient);
-		SensorStub sensorStub = new SensorStub(sensorclient);
-		Integer value = sensorStub.read();
-		displayStub.write(value.toString());
-
+		Integer value;
+		for(int i = 0; i < N ; i++) {
+			value = sensorStub.read();
+			displayStub.write(value.toString());
+			try{
+				Thread.sleep(2000);
+			}catch(InterruptedException e){
+				e.printStackTrace();
+			}
+		}
 
 		// TODO - END
 		
