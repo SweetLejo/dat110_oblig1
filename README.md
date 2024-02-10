@@ -1,3 +1,8 @@
+## oblig 1 group 21
+Leonard Heldal
+Aleksander Stadsnes
+
+
 ## DAT110 - Project 1: Socket Programming and RPC middleware
 
 The tasks related to this project will be part of the lab exercises in the next two weeks.
